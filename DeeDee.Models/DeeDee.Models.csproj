@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>Latest</LangVersion>
+    <Authors>Johan Potgieter</Authors>
+    <Description>Abstractions and models for projects that use DeeDee</Description>
   </PropertyGroup>
 
 </Project>
