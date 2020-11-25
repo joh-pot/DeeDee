@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DeeDee;
 using DeeDee.Models;
@@ -16,21 +17,21 @@ namespace Sample
             serviceCollection.AddDispatcher();
             var provider = serviceCollection.BuildServiceProvider();
             var dispatcher = provider.GetService<IDispatcher>();
-            await dispatcher.SendAsync(new GetARequest());
+            await dispatcher.SendAsync(new GetARequest()); 
         }
     }
 
 
-    public class GetARequest : IRequest
+    public class GetARequest : IRequest<List<List<string?>>>
     {
 
     }
 
-    public class HandlerA : IPipelineActionAsync<GetARequest>
+    public class HandlerA : IPipelineActionAsync<GetARequest, List<List<string?>>>
     {
-        public Task InvokeAsync(GetARequest request, PipelineContext context, NextAsync next, CancellationToken cancellationToken = default)
+        public Task<List<List<string>>> InvokeAsync(GetARequest request, PipelineContext<List<List<string>>> context, NextAsync<List<List<string>>> next, CancellationToken cancellationToken = default)
         {
-            return Task.CompletedTask;
+            throw new NotImplementedException();
         }
     }
 }

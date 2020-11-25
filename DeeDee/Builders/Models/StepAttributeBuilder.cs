@@ -1,4 +1,11 @@
-﻿using System;
+﻿namespace DeeDee.Builders.Models
+{
+    internal static class StepAttributeBuilder
+    {
+        public static string Build()
+        {
+            return @"
+using System;
 
 namespace DeeDee.Models
 {
@@ -10,6 +17,11 @@ namespace DeeDee.Models
         public StepAttribute(int order)
         {
             Order = order;
+        }
+    }
+}
+
+";
         }
     }
 }

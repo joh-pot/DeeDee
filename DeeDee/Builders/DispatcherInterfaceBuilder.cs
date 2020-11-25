@@ -35,20 +35,20 @@ namespace DeeDee.Builders
             List<(string RequestClassName, bool IsAsync)> irequests
         )
         {
-            foreach (var (RequestClassName, IsAsync) in irequests)
+            foreach (var (requestClassName, isAsync) in irequests)
             {
-                if (IsAsync)
+                if (isAsync)
                 {
                     sourceBuilder.AppendLine
                     ($@"
-                        public Task SendAsync({RequestClassName} request, CancellationToken token = default);"
+                        public Task SendAsync({requestClassName} request, CancellationToken token = default);"
                     );
                 }
                 else
                 {
                     sourceBuilder.AppendLine
                     ($@"
-                        public void Send({RequestClassName} request);"
+                        public void Send({requestClassName} request);"
                     );
                 }
 
@@ -62,15 +62,15 @@ namespace DeeDee.Builders
             List<(string RequestClassName, string ResponseClassName, bool IsAsync)> irequestsOfT
         )
         {
-            foreach (var (RequestClassName, ResponseClassName, IsAsync) in irequestsOfT)
+            foreach (var (requestClassName, responseClassName, isAsync) in irequestsOfT)
             {
-                if (IsAsync)
+                if (isAsync)
                 {
                     sourceBuilder.AppendLine
                     ($@"
-                        public Task<{ResponseClassName}> SendAsync
+                        public Task<{responseClassName}> SendAsync
                         (
-                            {RequestClassName} request,
+                            {requestClassName} request,
                             CancellationToken token = default
                         );"
                     );
@@ -79,9 +79,9 @@ namespace DeeDee.Builders
                 {
                     sourceBuilder.AppendLine
                     ($@"
-                        public {ResponseClassName} Send
+                        public {responseClassName} Send
                         (
-                            {RequestClassName} request
+                            {requestClassName} request
                         );"
                     );
                 }

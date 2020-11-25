@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Linq;
+using DeeDee.Builders.Models;
 
 namespace DeeDee
 {
@@ -18,14 +19,36 @@ namespace DeeDee
         public void Execute(GeneratorExecutionContext context)
         {
 
+            var frugalDictionary = FrugalDictionaryBuilder.Build();
+            var ipipelineAction = IPipelineActionBuilder.Build();
+            var irequest = IRequestBuilder.Build();
+            var nextDelegate = NextDelegateBuilder.Build();
+            var pipelineContext = PipelineContextBuilder.Build();
+            var serviceProviderDelegate = ServiceProviderDelegateBuilder.Build();
+            var stepAttribute = StepAttributeBuilder.Build();
+
+            context.AddSource("FrugalDictionary.cs", frugalDictionary);
+            context.AddSource("IPipelineAction.cs", ipipelineAction);
+            context.AddSource("IRequest.cs", irequest);
+            context.AddSource("NextDelegate.cs", nextDelegate);
+            context.AddSource("PipelineContext.cs", pipelineContext);
+            context.AddSource("ServiceProviderDelegate.cs", serviceProviderDelegate);
+            context.AddSource("StepAttribute.cs", stepAttribute);
+
+            var options = (context.Compilation as CSharpCompilation)!.SyntaxTrees[0].Options as CSharpParseOptions;
+
+            var compilation = context.Compilation.AddSyntaxTrees
+            (
+                CSharpSyntaxTree.ParseText(ipipelineAction, options)
+            );
+
+ 
             if (context.SyntaxReceiver is not SyntaxReceiver rec) return;
 
-            var compilation = context.Compilation;
-            
             var irequestsOfT = new List<(string RequestClassName, string ResponseClassName, bool isAsync)>();
 
             var irequests = new List<(string RequestClassName, bool isAsync)>();
-
+            //
             foreach (var cds in rec.ClassesWithBases)
             {
                 var model = compilation.GetSemanticModel(cds.SyntaxTree);
@@ -72,7 +95,7 @@ namespace DeeDee
         }
 
 
-        private string FormatCode(string source)
+        private static string FormatCode(string source)
         {
             return SyntaxFactory.ParseCompilationUnit(source).NormalizeWhitespace().ToString();
         }
@@ -83,7 +106,7 @@ namespace DeeDee
 
     internal class SyntaxReceiver : ISyntaxReceiver
     {
-        public List<ClassDeclarationSyntax> ClassesWithBases { get; private set; } = new List<ClassDeclarationSyntax>();
+        public List<ClassDeclarationSyntax> ClassesWithBases { get; } = new();
 
         public void OnVisitSyntaxNode(SyntaxNode syntaxNode)
         {

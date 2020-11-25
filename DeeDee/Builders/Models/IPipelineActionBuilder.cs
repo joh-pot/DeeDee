@@ -1,4 +1,11 @@
-﻿using System.Threading;
+﻿namespace DeeDee.Builders.Models
+{
+    internal static class IPipelineActionBuilder
+    {
+        public static string Build()
+        {
+            return @"
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DeeDee.Models
@@ -44,5 +51,10 @@ namespace DeeDee.Models
             ref PipelineContext<TResponse> context,
             Next<TResponse> next
         );
+    }
+}
+
+";
+        }
     }
 }

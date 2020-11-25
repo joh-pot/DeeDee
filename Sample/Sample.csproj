@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeeDee.Models\DeeDee.Models.csproj"  />
     <ProjectReference Include="..\DeeDee\DeeDee.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 

@@ -1,4 +1,11 @@
-﻿using System.Runtime.CompilerServices;
+﻿namespace DeeDee.Builders.Models
+{
+    internal static class PipelineContextBuilder
+    {
+        public static string Build()
+        {
+            return @"
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace DeeDee.Models
@@ -53,4 +60,9 @@ namespace DeeDee.Models
 
     }
 
+}
+
+";
+        }
+    }
 }

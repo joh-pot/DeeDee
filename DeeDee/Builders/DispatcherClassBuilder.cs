@@ -47,16 +47,16 @@ namespace DeeDee.Builders
             List<(string RequestClassName, bool isAsync)> irequests
         )
         {
-            foreach (var (RequestClassName, IsAsync) in irequests)
+            foreach (var (requestClassName, isAsync) in irequests)
             {
-                if (IsAsync)
+                if (isAsync)
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        public Task SendAsync({RequestClassName} request, CancellationToken token = default)
+                        public Task SendAsync({requestClassName} request, CancellationToken token = default)
                         {{ 
                             var context = new PipelineContext();
-                            NextAsync builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(RequestClassName)}.Value;
+                            NextAsync builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName)}.Value;
                             return builtPipeline(request, context, token); 
                         }}"
                     );
@@ -65,10 +65,10 @@ namespace DeeDee.Builders
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        public void Send({RequestClassName} request)
+                        public void Send({requestClassName} request)
                         {{ 
                             var context = new PipelineContext();
-                            Next builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(RequestClassName)}.Value;
+                            Next builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName)}.Value;
                             builtPipeline(request, ref context); 
                         }}"
                     );
@@ -84,20 +84,20 @@ namespace DeeDee.Builders
         )
         {
 
-            foreach (var (RequestClassName, ResponseClassName, IsAsync) in irequestsOfT)
+            foreach (var (requestClassName, responseClassName, isAsync) in irequestsOfT)
             {
-                if (IsAsync)
+                if (isAsync)
                 {
                     sourceBuilder.AppendLine
                     ($@"
-                        public Task<{ResponseClassName}> SendAsync
+                        public Task<{responseClassName}> SendAsync
                         (
-                            {RequestClassName} request,
+                            {requestClassName} request,
                             CancellationToken token = default
                         )
                         {{ 
-                            var context = new PipelineContext<{ResponseClassName}>();
-                            NextAsync<{ResponseClassName}> builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(RequestClassName, ResponseClassName)}.Value;
+                            var context = new PipelineContext<{responseClassName}>();
+                            NextAsync<{responseClassName}> builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName, responseClassName)}.Value;
                             return builtPipeline(request, context, token);
                         }}"
                     );
@@ -106,13 +106,13 @@ namespace DeeDee.Builders
                 {
                     sourceBuilder.AppendLine
                     ($@"
-                        public {ResponseClassName} Send
+                        public {responseClassName} Send
                         (
-                            {RequestClassName} request
+                            {requestClassName} request
                         )
                         {{ 
-                            var context = new PipelineContext<{ResponseClassName}>();
-                            Next<{ResponseClassName}> builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(RequestClassName, ResponseClassName)}.Value;
+                            var context = new PipelineContext<{responseClassName}>();
+                            Next<{responseClassName}> builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName, responseClassName)}.Value;
                             builtPipeline(request, ref context);
                         }}"
                     );

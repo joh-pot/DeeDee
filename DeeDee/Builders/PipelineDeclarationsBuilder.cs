@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DeeDee.Builders
 {
@@ -12,38 +13,38 @@ namespace DeeDee.Builders
             List<(string RequestClassName, string ResponseClassName, bool IsAsync)> irequestsOfT
         )
         {
-            foreach (var (RequestClassName, IsAsync) in irequests)
+            foreach (var (requestClassName, isAsync) in irequests)
             {
-                if (IsAsync)
+                if (isAsync)
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        private readonly Lazy<NextAsync> {SafeVariableName(RequestClassName)};"
+                        private readonly Lazy<NextAsync> {SafeVariableName(requestClassName)};"
                     );
                 }
                 else
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        private readonly Lazy<Next> {SafeVariableName(RequestClassName)};"
+                        private readonly Lazy<Next> {SafeVariableName(requestClassName)};"
                     );
                 }
             }
 
-            foreach (var (RequestClassName, ResponseClassName, IsAsync) in irequestsOfT)
+            foreach (var (requestClassName, responseClassName, isAsync) in irequestsOfT)
             {
-                if (IsAsync)
+                if (isAsync)
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        private readonly Lazy<NextAsync<{ResponseClassName}>> {SafeVariableName(RequestClassName, ResponseClassName)};"
+                        private readonly Lazy<NextAsync<{responseClassName}>> {SafeVariableName(requestClassName, responseClassName)};"
                     );
                 }
                 else
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        private readonly Lazy<Next<{ResponseClassName}>> {SafeVariableName(RequestClassName, ResponseClassName)};"
+                        private readonly Lazy<Next<{responseClassName}>> {SafeVariableName(requestClassName, responseClassName)};"
                     );
                 }
             }
@@ -56,38 +57,38 @@ namespace DeeDee.Builders
             List<(string RequestClassName, string ResponseClassName, bool IsAsync)> irequestsOfT
         )
         {
-            foreach (var (RequestClassName, IsAsync) in irequests)
+            foreach (var (requestClassName, isAsync) in irequests)
             {
-                if (IsAsync)
+                if (isAsync)
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        {SafeVariableName(RequestClassName)} = new Lazy<NextAsync>(BuildAsync<{RequestClassName}>);"
+                        {SafeVariableName(requestClassName)} = new Lazy<NextAsync>(BuildAsync<{requestClassName}>);"
                     );
                 }
                 else
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        {SafeVariableName(RequestClassName)} = new Lazy<Next>(Build<{RequestClassName}>);"
+                        {SafeVariableName(requestClassName)} = new Lazy<Next>(Build<{requestClassName}>);"
                     );
                 }
             }
 
-            foreach (var (RequestClassName, ResponseClassName, IsAsync) in irequestsOfT)
+            foreach (var (requestClassName, responseClassName, isAsync) in irequestsOfT)
             {
-                if (IsAsync)
+                if (isAsync)
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                        {SafeVariableName(RequestClassName, ResponseClassName)} = new Lazy<NextAsync<{ResponseClassName}>>(BuildAsync<{RequestClassName},{ResponseClassName}>);"
+                        {SafeVariableName(requestClassName, responseClassName)} = new Lazy<NextAsync<{responseClassName}>>(BuildAsync<{requestClassName},{responseClassName}>);"
                     );
                 }
                 else
                 {
                     sourceBuilder.AppendLine
                     (@$"
-                       {SafeVariableName(RequestClassName, ResponseClassName)} = new Lazy<Next<{ResponseClassName}>>(Build<{RequestClassName},{ResponseClassName}>);"
+                       {SafeVariableName(requestClassName, responseClassName)} = new Lazy<Next<{responseClassName}>>(Build<{requestClassName},{responseClassName}>);"
                     );
                 }
             }
@@ -168,16 +169,17 @@ namespace DeeDee.Builders
 
         }
 
-
+        private static readonly Regex Safe = new("[^a-z]", RegexOptions.Compiled| RegexOptions.IgnoreCase);
        
         public static string SafeVariableName(string requestClassName)
         {
-            return $"_{requestClassName.Replace(".", "_")}_lazy";
+            
+            return $"_{Safe.Replace(requestClassName, "_")}_lazy";
         }
 
         public static string SafeVariableName(string requestClassName, string responseClassName)
         {
-            return $"_{requestClassName.Replace(".", "_")}_{responseClassName.Replace(".", "_")}_lazy";
+            return $"_{Safe.Replace(requestClassName, "_")}_{Safe.Replace(responseClassName, "_")}_lazy";
         }
 
     }

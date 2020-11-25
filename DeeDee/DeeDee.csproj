@@ -11,7 +11,9 @@
     <Description>Mediator pattern using source generation for .NET</Description>
     <PackageProjectUrl>https://github.com/joh-pot/DeeDee/wiki</PackageProjectUrl>
     <RepositoryUrl>https://github.com/joh-pot/DeeDee</RepositoryUrl>
-    <PackageTags>CQRS, command, queries, request, response, source generation</PackageTags> <!-- Do not include the generator as a lib dependency -->
+    <PackageTags>CQRS, command, queries, request, response, source generation</PackageTags>
+    <Version>1.0.2</Version>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression> <!-- Do not include the generator as a lib dependency -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,10 +23,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DeeDee.Models\DeeDee.Models.csproj" />
   </ItemGroup>
 
 </Project>

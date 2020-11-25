@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+﻿namespace DeeDee.Builders.Models
+{
+    internal static class FrugalDictionaryBuilder
+    {
+        public static string Build()
+        {
+            return @"
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -262,5 +269,9 @@ namespace DeeDee.Models
             }
         }
 
+    }
+}
+";
+        }
     }
 }

@@ -1,4 +1,11 @@
-﻿using System;
+﻿namespace DeeDee.Builders.Models
+{
+    internal static class ServiceProviderDelegateBuilder
+    {
+        public static string Build()
+        {
+            return @"
+using System;
 using System.Collections.Generic;
 
 namespace DeeDee.Models
@@ -11,4 +18,9 @@ namespace DeeDee.Models
             => (IEnumerable<T>)factory(typeof(IEnumerable<T>));
     }
 
+}
+
+";
+        }
+    }
 }
