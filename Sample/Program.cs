@@ -16,18 +16,18 @@ namespace Sample
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddDispatcher();
             var provider = serviceCollection.BuildServiceProvider();
-            var dispatcher = provider.GetService<IDispatcher>();
+            var dispatcher = provider.GetRequiredService<IDispatcher>();
             await dispatcher.SendAsync(new GetARequest()); 
         }
     }
 
 
-    public class GetARequest : IRequest<List<List<string?>>>
+    public class GetARequest : IRequest<List<List<string>>>
     {
 
     }
 
-    public class HandlerA : IPipelineActionAsync<GetARequest, List<List<string?>>>
+    public class HandlerA : IPipelineActionAsync<GetARequest, List<List<string>>>
     {
         public Task<List<List<string>>> InvokeAsync(GetARequest request, PipelineContext<List<List<string>>> context, NextAsync<List<List<string>>> next, CancellationToken cancellationToken = default)
         {

@@ -19,7 +19,7 @@
                     {
                         services.AddSingleton<IDispatcher, Dispatcher>();
                         RegisterPipelineActions(services);
-                        services.AddSingleton<DeeDee.Models.ServiceProvider>(ctx => ctx.GetService);
+                        services.AddSingleton<DeeDee.Models.ServiceProvider>(ctx => ctx.GetRequiredService);
                         return services;
                     }
 

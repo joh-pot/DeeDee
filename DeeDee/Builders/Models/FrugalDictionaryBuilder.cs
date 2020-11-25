@@ -197,7 +197,7 @@ namespace DeeDee.Models
             {
                 var entry = FindEntry(key);
                 if (entry == null)
-                    throw null;
+                    throw new KeyNotFoundException();
                 return entry;
             }
         }
