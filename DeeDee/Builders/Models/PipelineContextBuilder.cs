@@ -18,13 +18,13 @@ namespace DeeDee.Models
         private FrugalDictionary _items;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddItem(object key, object value)
+        public void AddItem(object key, object? value)
         {
             _items.Add(key, value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public object GetValue(object key)
+        public object? GetValue(object key)
         {
             return _items[key];
         }
@@ -42,13 +42,13 @@ namespace DeeDee.Models
         private FrugalDictionary _items;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddItem(object key, object value)
+        public void AddItem(object key, object? value)
         {
             _items.Add(key, value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public object GetValue(object key)
+        public object? GetValue(object key)
         {
             return _items[key];
         }
