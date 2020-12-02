@@ -8,7 +8,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
+#nullable enable
 
 namespace DeeDee.Models
 {
@@ -27,8 +27,7 @@ namespace DeeDee.Models
         private KeyValuePair<object, object> _ten;
         private byte _allocated;
         private Dictionary<object, object>? _values;
-
-
+      
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool TryCheck(ref KeyValuePair<object, object> kvp, object key, out object? value)
         {

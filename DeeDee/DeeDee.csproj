@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>Latest</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -12,7 +13,7 @@
     <PackageProjectUrl>https://github.com/joh-pot/DeeDee/wiki</PackageProjectUrl>
     <RepositoryUrl>https://github.com/joh-pot/DeeDee</RepositoryUrl>
     <PackageTags>CQRS, command, queries, request, response, source generation</PackageTags>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression> <!-- Do not include the generator as a lib dependency -->
   </PropertyGroup>
 

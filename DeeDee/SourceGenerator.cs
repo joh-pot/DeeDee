@@ -53,6 +53,7 @@ namespace DeeDee
             {
                 var model = compilation.GetSemanticModel(cds.SyntaxTree);
                 var type = model.GetDeclaredSymbol(cds);
+                if (type == null) continue;
                 if (type.IsAbstract) continue;
                 
                 foreach (var i in type.AllInterfaces)

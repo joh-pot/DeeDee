@@ -7,7 +7,7 @@
             return @"
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
+#nullable enable
 namespace DeeDee.Models
 {
     [StructLayout(LayoutKind.Auto)]
