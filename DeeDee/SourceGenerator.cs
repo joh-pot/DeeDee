@@ -26,6 +26,7 @@ namespace DeeDee
             var pipelineContext = PipelineContextBuilder.Build();
             var serviceProviderDelegate = ServiceProviderDelegateBuilder.Build();
             var stepAttribute = StepAttributeBuilder.Build();
+            var throwHelper = ThrowHelperBuilder.Build();
 
             context.AddSource("FrugalDictionary.cs", frugalDictionary);
             context.AddSource("IPipelineAction.cs", ipipelineAction);
@@ -34,6 +35,7 @@ namespace DeeDee
             context.AddSource("PipelineContext.cs", pipelineContext);
             context.AddSource("ServiceProviderDelegate.cs", serviceProviderDelegate);
             context.AddSource("StepAttribute.cs", stepAttribute);
+            context.AddSource("ThrowHelper.cs", throwHelper);
 
             var options = (context.Compilation as CSharpCompilation)!.SyntaxTrees[0].Options as CSharpParseOptions;
 

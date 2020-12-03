@@ -43,161 +43,165 @@ namespace DeeDee.Models
 
         public bool TryGetValue(object key, out object? value)
         {
-            value = FindEntry(key);
-            return value != null;
+            var (found, val) = FindEntry(key);
+            value = val;
+            return found;
         }
 
-        private object? FindEntry(object key)
+        private static (bool Found, object? Value) Found(object? value) => (true, value);
+        private static (bool Found, object? Value) NotFound() => (false, null);
+
+        private (bool Found, object? Value) FindEntry(object key)
         {
             switch (_allocated)
             {
-                case 0: return null;
+                case 0: return NotFound();
                 case 1:
                 {
-                    return TryCheck(ref _one, key, out var val) ? val : null;
+                    return TryCheck(ref _one, key, out var val) ? Found(val) : NotFound();
                 }
                 case 2:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
-                    return TryCheck(ref _two, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _two, key, out val) ? Found(val) : NotFound();
                 }
                 case 3:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _two, key, out val))
-                        return val;
-                    return TryCheck(ref _three, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _three, key, out val) ? Found(val) : NotFound();
                 }
                 case 4:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _two, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _three, key, out val))
-                        return val;
-                    return TryCheck(ref _four, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _four, key, out val) ? Found(val) : NotFound();
                 }
                 case 5:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _two, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _three, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _four, key, out val))
-                        return val;
-                    return TryCheck(ref _five, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _five, key, out val) ? Found(val) : NotFound();
                 }
                 case 6:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _two, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _three, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _four, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _five, key, out val))
-                        return val;
-                    return TryCheck(ref _six, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _six, key, out val) ? Found(val) : NotFound();
                 }
                 case 7:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _two, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _three, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _four, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _five, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _six, key, out val))
-                        return val;
-                    return TryCheck(ref _seven, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _seven, key, out val) ? Found(val) : NotFound();
                 }
                 case 8:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _two, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _three, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _four, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _five, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _six, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _seven, key, out val))
-                        return val;
-                    return TryCheck(ref _eight, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _eight, key, out val) ? Found(val) : NotFound();
                 }
                 case 9:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _two, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _three, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _four, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _five, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _six, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _seven, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _eight, key, out val))
-                        return val;
-                    return TryCheck(ref _nine, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _nine, key, out val) ? Found(val) : NotFound();
                 }
                 case 10:
                 {
                     if (TryCheck(ref _one, key, out var val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _two, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _three, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _four, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _five, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _six, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _seven, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _eight, key, out val))
-                        return val;
+                        return Found(val);
                     if (TryCheck(ref _nine, key, out val))
-                        return val;
-                    return TryCheck(ref _ten, key, out val) ? val : null;
+                        return Found(val);
+                    return TryCheck(ref _ten, key, out val) ? Found(val) : NotFound();
                 }
                 default:
                 {
-                    return _values!.TryGetValue(key, out var val) ? val : null;
+                    return _values!.TryGetValue(key, out var val) ? Found(val) : NotFound();
                 }
             }
 
         }
 
-        public object this[object key]
+        public object? this[object key]
         {
             get
             {
                 var entry = FindEntry(key);
-                if (entry == null)
-                    throw new KeyNotFoundException();
-                return entry;
+                if (!entry.Found)
+                    ThrowHelper.ThrowKeyNotFound();
+                return entry.Value;
             }
         }
 
