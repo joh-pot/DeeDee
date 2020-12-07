@@ -19,7 +19,7 @@ namespace DeeDee.Builders
                 namespace DeeDee"
             );
             sourceBuilder.AppendLine("{");
-            sourceBuilder.AppendLine("internal interface IDispatcher");
+            sourceBuilder.AppendLine("public interface IDispatcher");
             sourceBuilder.AppendLine("{");
             SignaturesIRequest(ref sourceBuilder, irequests);
             SignaturesIRequestT(ref sourceBuilder, irequestsOfT);

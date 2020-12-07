@@ -21,7 +21,7 @@ namespace DeeDee.Builders
                 namespace DeeDee"
             );
             sourceBuilder.AppendLine("{");
-            sourceBuilder.AppendLine("internal class Dispatcher : IDispatcher");
+            sourceBuilder.AppendLine("public class Dispatcher : IDispatcher");
             sourceBuilder.AppendLine("{");
             sourceBuilder.AppendLine("private readonly DeeDee.Models.ServiceProvider _serviceFactory;");
             PipelineDeclarationsBuilder.LazyDeclarations(ref sourceBuilder, irequests, irequestsOfT);
