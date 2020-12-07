@@ -10,10 +10,10 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <Authors>Johan Potgieter</Authors>
     <Description>Mediator pattern using source generation for .NET</Description>
-    <PackageProjectUrl>https://github.com/joh-pot/DeeDee/wiki</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/joh-pot/DeeDee</PackageProjectUrl>
     <RepositoryUrl>https://github.com/joh-pot/DeeDee</RepositoryUrl>
     <PackageTags>CQRS, command, queries, request, response, source generation</PackageTags>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression> <!-- Do not include the generator as a lib dependency -->
   </PropertyGroup>
 

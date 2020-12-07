@@ -22,12 +22,12 @@ namespace Sample
     }
 
 
-    public class GetARequest : IRequest<List<List<string>>>
+    internal class GetARequest : IRequest<List<List<string>>>
     {
 
     }
 
-    public class HandlerA : IPipelineActionAsync<GetARequest, List<List<string>>>
+    internal class HandlerA : IPipelineActionAsync<GetARequest, List<List<string>>>
     {
         public Task<List<List<string>>> InvokeAsync(GetARequest request, PipelineContext<List<List<string>>> context, NextAsync<List<List<string>>> next, CancellationToken cancellationToken = default)
         {
