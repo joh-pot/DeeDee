@@ -113,7 +113,7 @@ namespace DeeDee.Builders
                         {{ 
                             var context = new PipelineContext<{responseClassName}>();
                             Next<{responseClassName}> builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName, responseClassName)}.Value;
-                            builtPipeline(request, ref context);
+                            return builtPipeline(request, ref context);
                         }}"
                     );
                 }
