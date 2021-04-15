@@ -13,7 +13,7 @@
 
             namespace DeeDee
             {
-                public static class IocExtensions
+                internal static class IocExtensions
                 {
                     public static IServiceCollection AddDispatcher(this IServiceCollection services)
                     {
