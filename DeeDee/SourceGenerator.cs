@@ -1,10 +1,10 @@
 ﻿using DeeDee.Builders;
+using DeeDee.Builders.Models;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Collections.Generic;
 using System.Linq;
-using DeeDee.Builders.Models;
 
 namespace DeeDee
 {
@@ -19,14 +19,21 @@ namespace DeeDee
         public void Execute(GeneratorExecutionContext context)
         {
 
-            var frugalDictionary = FrugalDictionaryBuilder.Build();
-            var ipipelineAction = IPipelineActionBuilder.Build();
-            var irequest = IRequestBuilder.Build();
-            var nextDelegate = NextDelegateBuilder.Build();
-            var pipelineContext = PipelineContextBuilder.Build();
-            var serviceProviderDelegate = ServiceProviderDelegateBuilder.Build();
-            var stepAttribute = StepAttributeBuilder.Build();
-            var throwHelper = ThrowHelperBuilder.Build();
+            if (context.SyntaxReceiver is not SyntaxReceiver rec) return;
+
+            if(rec.ClassesWithBases.Count == 0) return;
+
+            var asmName = context.Compilation.AssemblyName;
+            var ns = asmName == null ? string.Empty : $"{asmName}.";
+
+            var frugalDictionary = FrugalDictionaryBuilder.Build(ns);
+            var ipipelineAction = IPipelineActionBuilder.Build(ns);
+            var irequest = IRequestBuilder.Build(ns);
+            var nextDelegate = NextDelegateBuilder.Build(ns);
+            var pipelineContext = PipelineContextBuilder.Build(ns);
+            var serviceProviderDelegate = ServiceProviderDelegateBuilder.Build(ns);
+            var stepAttribute = StepAttributeBuilder.Build(ns);
+            var throwHelper = ThrowHelperBuilder.Build(ns);
 
             context.AddSource("FrugalDictionary.cs", frugalDictionary);
             context.AddSource("IPipelineAction.cs", ipipelineAction);
@@ -44,23 +51,20 @@ namespace DeeDee
                 CSharpSyntaxTree.ParseText(ipipelineAction, options)
             );
 
- 
-            if (context.SyntaxReceiver is not SyntaxReceiver rec) return;
-
             var irequestsOfT = new List<(string RequestClassName, string ResponseClassName, bool isAsync)>();
 
             var irequests = new List<(string RequestClassName, bool isAsync)>();
-            //
+
             foreach (var cds in rec.ClassesWithBases)
             {
                 var model = compilation.GetSemanticModel(cds.SyntaxTree);
                 var type = model.GetDeclaredSymbol(cds);
                 if (type == null) continue;
                 if (type.IsAbstract) continue;
-                
+
                 foreach (var i in type.AllInterfaces)
                 {
-                    if (i.ContainingNamespace.ToDisplayString() != "DeeDee.Models") continue;
+                    if (i.ContainingNamespace.ToDisplayString() != $"{ns}DeeDee.Models") continue;
 
                     switch (i.Name)
                     {
@@ -84,17 +88,17 @@ namespace DeeDee
             var distinctIrequest = irequests.Distinct().ToList();
             var distinctIrequestOfT = irequestsOfT.Distinct().ToList();
 
-            var iocExtensions = IocExtensionsBuilder.Build();
+            var iocExtensions = IocExtensionsBuilder.Build(ns);
 
-            var idispatcher = DispatcherInterfaceBuilder.Build(distinctIrequest, distinctIrequestOfT);
+            var idispatcher = DispatcherInterfaceBuilder.Build(ns, distinctIrequest, distinctIrequestOfT);
 
-            var dispatcher = DispatcherClassBuilder.Build(distinctIrequest, distinctIrequestOfT);
+            var dispatcher = DispatcherClassBuilder.Build(ns, distinctIrequest, distinctIrequestOfT);
 
-        
+
             context.AddSource("IocExtensions.cs", iocExtensions);
             context.AddSource("IDispatcher.cs", FormatCode(idispatcher));
             context.AddSource("Dispatcher.cs", FormatCode(dispatcher));
-           
+
         }
 
 

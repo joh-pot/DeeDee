@@ -2,16 +2,20 @@
 {
     internal static class IocExtensionsBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
+            var usings = $@"
             using System;
             using System.Linq;
             using System.Reflection;
-            using DeeDee.Models;
+            using {ns}DeeDee.Models;
             using Microsoft.Extensions.DependencyInjection;
 
-            namespace DeeDee
+            namespace {ns}DeeDee
+";
+
+
+            return usings + @"
             {
                 internal static class IocExtensions
                 {

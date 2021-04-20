@@ -7,18 +7,19 @@ namespace DeeDee.Builders
     {
         public static string Build
         (
+            string ns,
             List<(string RequestClassName, bool IsAsync)> irequests,
             List<(string RequestClassName, string ResponseClassName, bool IsAsync)> irequestsOfT
         )
         {
             var sourceBuilder = new StringBuilder
-            (@"
+            ($@"
                 using System;
                 using System.Threading;
                 using System.Threading.Tasks;
                 using System.Linq;
-                using DeeDee.Models;
-                namespace DeeDee"
+                using {ns}DeeDee.Models;
+                namespace {ns}DeeDee"
             );
             sourceBuilder.AppendLine("{");
             sourceBuilder.AppendLine("public class Dispatcher : IDispatcher");

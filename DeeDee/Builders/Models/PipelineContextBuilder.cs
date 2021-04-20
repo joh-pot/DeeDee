@@ -2,13 +2,17 @@
 {
     internal static class PipelineContextBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
+            var usings = $@"
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #nullable enable
-namespace DeeDee.Models
+
+namespace {ns}DeeDee.Models
+";
+
+            return usings +  @"
 {
     [StructLayout(LayoutKind.Auto)]
     public struct PipelineContext<TResponse>

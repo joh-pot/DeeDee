@@ -2,12 +2,15 @@
 {
     internal static class StepAttributeBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
+            var usings = $@"
 using System;
 
-namespace DeeDee.Models
+namespace {ns}DeeDee.Models
+";
+
+            return usings + @"
 {
     [AttributeUsage(AttributeTargets.All)]
     public sealed class StepAttribute : Attribute

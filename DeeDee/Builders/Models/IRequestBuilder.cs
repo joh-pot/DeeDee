@@ -2,10 +2,11 @@
 {
     internal static class IRequestBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
-namespace DeeDee.Models
+            var usings = $"namespace {ns}DeeDee.Models";
+
+            return usings + @"
 { 
     public interface IRequest<TResponse>
     {

@@ -2,13 +2,16 @@
 {
     internal static class NextDelegateBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
+            var usings = $@"
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeeDee.Models
+namespace {ns}DeeDee.Models
+";
+
+            return usings + @"
 {
     public delegate Task<TResponse> NextAsync<TResponse>
     (

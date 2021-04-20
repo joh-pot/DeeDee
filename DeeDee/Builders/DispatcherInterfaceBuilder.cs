@@ -7,16 +7,17 @@ namespace DeeDee.Builders
     {
         public static string Build
         (
+            string ns,
             List<(string RequestClassName, bool IsAsync)> irequests,
             List<(string RequestClassName, string ResponseClassName, bool IsAsync)> irequestsOfT
         )
         {
             var sourceBuilder = new StringBuilder
-            (@"
+            ($@"
                 using System;
                 using System.Threading;
                 using System.Threading.Tasks;
-                namespace DeeDee"
+                namespace {ns}DeeDee"
             );
             sourceBuilder.AppendLine("{");
             sourceBuilder.AppendLine("public interface IDispatcher");

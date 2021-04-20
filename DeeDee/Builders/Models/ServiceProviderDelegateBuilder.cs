@@ -2,13 +2,16 @@
 {
     internal static class ServiceProviderDelegateBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
+            var usings = $@"
 using System;
 using System.Collections.Generic;
 
-namespace DeeDee.Models
+namespace {ns}DeeDee.Models
+";
+
+            return usings + @"
 {
     public delegate object ServiceProvider(Type type);
 

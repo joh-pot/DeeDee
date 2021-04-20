@@ -2,15 +2,19 @@
 {
     internal static class FrugalDictionaryBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
+            var usings = $@"
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 #nullable enable
 
-namespace DeeDee.Models
+namespace {ns}DeeDee.Models
+";
+
+
+            return usings + @"
 {
     [StructLayout(LayoutKind.Auto)]
     internal struct FrugalDictionary

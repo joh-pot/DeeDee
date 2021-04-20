@@ -2,13 +2,15 @@
 {
     internal static class IPipelineActionBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
+            var usings = $@"
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeeDee.Models
+namespace {ns}DeeDee.Models";
+
+            return usings + @"
 {
     public interface IPipelineActionAsync<in TRequest, TResponse> where TRequest : IRequest<TResponse>
     {

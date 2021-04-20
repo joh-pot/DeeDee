@@ -2,13 +2,16 @@
 {
     internal static class ThrowHelperBuilder
     {
-        public static string Build()
+        public static string Build(string ns)
         {
-            return @"
+            var usings = $@"
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace DeeDee.Models
+namespace {ns}DeeDee.Models
+";
+
+            return usings + @"
 {
     internal static class ThrowHelper
     {
