@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "DeeDee": {
+      "commandName": "Project"
+    },
+    "RoslynComponent": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\Sample\\Sample.csproj"
+    }
+  }
+}

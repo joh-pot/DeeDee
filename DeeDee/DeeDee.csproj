@@ -1,31 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>Latest</LangVersion>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    <Authors>Johan Potgieter</Authors>
-    <Description>Mediator pattern using source generation for .NET</Description>
-    <PackageProjectUrl>https://github.com/joh-pot/DeeDee/wiki</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/joh-pot/DeeDee</RepositoryUrl>
-    <PackageTags>CQRS, command, queries, request, response, source generation</PackageTags>
-    <Version>1.0.13</Version>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression> <!-- Do not include the generator as a lib dependency -->
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>Latest</LangVersion>
+		<IsRoslynComponent>true</IsRoslynComponent>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <!-- Package the generator in the analyzer directory of the nuget package -->
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-  </ItemGroup>
+	<PropertyGroup>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<Authors>Johan Potgieter</Authors>
+		<Description>Mediator pattern using source generation for .NET</Description>
+		<PackageProjectUrl>https://github.com/joh-pot/DeeDee/wiki</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/joh-pot/DeeDee</RepositoryUrl>
+		<PackageTags>CQRS, command, queries, request, response, source generation</PackageTags>
+		<Version>2.0.0</Version>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" PrivateAssets="all" />
-  </ItemGroup>
+		
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<!-- Do not include the generator as a lib dependency -->
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- Package the generator in the analyzer directory of the nuget package -->
+		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+
+		<!-- Pack the attributes dll in the lib\netstandard2.0 path -->
+		<None Include="$(OutputPath)\DeeDee.Models.dll" Pack="true" PackagePath="lib\netstandard2.0" Visible="true" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DeeDee.Models\DeeDee.Models.csproj" PrivateAssets="all" />
+	</ItemGroup>
 
 </Project>

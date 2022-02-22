@@ -18,15 +18,16 @@ namespace DeeDee.Builders
                 using System.Threading;
                 using System.Threading.Tasks;
                 using System.Linq;
-                using {ns}DeeDee.Models;
-                namespace {ns}DeeDee"
+                using DeeDee.Models;
+                using ServiceProvider = DeeDee.Models.ServiceProvider;
+                namespace {ns}DeeDee.Generated.Models"
             );
             sourceBuilder.AppendLine("{");
             sourceBuilder.AppendLine("public class Dispatcher : IDispatcher");
             sourceBuilder.AppendLine("{");
-            sourceBuilder.AppendLine("private readonly DeeDee.Models.ServiceProvider _serviceFactory;");
+            sourceBuilder.AppendLine("private readonly ServiceProvider _serviceFactory;");
             PipelineDeclarationsBuilder.LazyDeclarations(ref sourceBuilder, irequests, irequestsOfT);
-            sourceBuilder.AppendLine(@"public Dispatcher(DeeDee.Models.ServiceProvider service)");
+            sourceBuilder.AppendLine("public Dispatcher(ServiceProvider service)");
             sourceBuilder.AppendLine("{");
             sourceBuilder.AppendLine("_serviceFactory = service;");
             PipelineDeclarationsBuilder.LazyInitializations(ref sourceBuilder, irequests, irequestsOfT);
@@ -52,27 +53,27 @@ namespace DeeDee.Builders
             {
                 if (isAsync)
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        public Task SendAsync({requestClassName} request, CancellationToken token = default)
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public Task SendAsync({0} request, CancellationToken token = default)
                         {{ 
                             var context = new PipelineContext();
-                            NextAsync builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName)}.Value;
+                            NextAsync builtPipeline = {1}.Value;
                             return builtPipeline(request, context, token); 
-                        }}"
-                    );
+                        }}", requestClassName, PipelineDeclarationsBuilder.SafeVariableName(requestClassName)
+                    ).AppendLine();
                 }
                 else
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        public void Send({requestClassName} request)
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public void Send({0} request)
                         {{ 
                             var context = new PipelineContext();
-                            Next builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName)}.Value;
+                            Next builtPipeline = {1}.Value;
                             builtPipeline(request, ref context); 
-                        }}"
-                    );
+                        }}", requestClassName, PipelineDeclarationsBuilder.SafeVariableName(requestClassName)
+                    ).AppendLine();
                 }
 
             }
@@ -89,34 +90,34 @@ namespace DeeDee.Builders
             {
                 if (isAsync)
                 {
-                    sourceBuilder.AppendLine
-                    ($@"
-                        public Task<{responseClassName}> SendAsync
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public Task<{0}> SendAsync
                         (
-                            {requestClassName} request,
+                            {1} request,
                             CancellationToken token = default
                         )
                         {{ 
-                            var context = new PipelineContext<{responseClassName}>();
-                            NextAsync<{responseClassName}> builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName, responseClassName)}.Value;
+                            var context = new PipelineContext<{0}>();
+                            NextAsync<{0}> builtPipeline = {2}.Value;
                             return builtPipeline(request, context, token);
-                        }}"
-                    );
+                        }}", responseClassName, requestClassName, PipelineDeclarationsBuilder.SafeVariableName(requestClassName, responseClassName)
+                    ).AppendLine();
                 }
                 else
                 {
-                    sourceBuilder.AppendLine
-                    ($@"
-                        public {responseClassName} Send
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public {0} Send
                         (
-                            {requestClassName} request
+                            {1} request
                         )
                         {{ 
-                            var context = new PipelineContext<{responseClassName}>();
-                            Next<{responseClassName}> builtPipeline = {PipelineDeclarationsBuilder.SafeVariableName(requestClassName, responseClassName)}.Value;
+                            var context = new PipelineContext<{0}>();
+                            Next<{0}> builtPipeline = {2}.Value;
                             return builtPipeline(request, ref context);
-                        }}"
-                    );
+                        }}", responseClassName, requestClassName, PipelineDeclarationsBuilder.SafeVariableName(requestClassName, responseClassName)
+                    ).AppendLine();
                 }
 
             }

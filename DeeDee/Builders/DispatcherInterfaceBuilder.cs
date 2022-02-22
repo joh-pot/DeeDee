@@ -17,7 +17,8 @@ namespace DeeDee.Builders
                 using System;
                 using System.Threading;
                 using System.Threading.Tasks;
-                namespace {ns}DeeDee"
+                using DeeDee.Models;
+                namespace {ns}DeeDee.Generated.Models"
             );
             sourceBuilder.AppendLine("{");
             sourceBuilder.AppendLine("public interface IDispatcher");
@@ -25,9 +26,35 @@ namespace DeeDee.Builders
             SignaturesIRequest(ref sourceBuilder, irequests);
             SignaturesIRequestT(ref sourceBuilder, irequestsOfT);
             sourceBuilder.AppendLine("}");
-
             sourceBuilder.AppendLine("}");
             return sourceBuilder.ToString();
+        }
+
+        private static void ExtensionIRequest
+        (
+            ref StringBuilder sourceBuilder,
+            List<(string RequestClassName, bool IsAsync)> irequests
+        )
+        {
+            foreach (var (requestClassName, isAsync) in irequests)
+            {
+                if (isAsync)
+                {
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public Task SendAsync({0} request, CancellationToken token = default);", requestClassName
+                    ).AppendLine();
+                }
+                else
+                {
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public void Send({0} request);", requestClassName
+                    ).AppendLine();
+                }
+
+            }
+
         }
 
         private static void SignaturesIRequest
@@ -40,17 +67,17 @@ namespace DeeDee.Builders
             {
                 if (isAsync)
                 {
-                    sourceBuilder.AppendLine
-                    ($@"
-                        public Task SendAsync({requestClassName} request, CancellationToken token = default);"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public Task SendAsync({0} request, CancellationToken token = default);", requestClassName
+                    ).AppendLine();
                 }
                 else
                 {
-                    sourceBuilder.AppendLine
-                    ($@"
-                        public void Send({requestClassName} request);"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public void Send({0} request);", requestClassName
+                    ).AppendLine();
                 }
 
             }
@@ -67,24 +94,24 @@ namespace DeeDee.Builders
             {
                 if (isAsync)
                 {
-                    sourceBuilder.AppendLine
-                    ($@"
-                        public Task<{responseClassName}> SendAsync
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public Task<{0}> SendAsync
                         (
-                            {requestClassName} request,
+                            {1} request,
                             CancellationToken token = default
-                        );"
-                    );
+                        );", responseClassName, requestClassName
+                    ).AppendLine();
                 }
                 else
                 {
-                    sourceBuilder.AppendLine
-                    ($@"
-                        public {responseClassName} Send
+                    sourceBuilder.AppendFormat
+                    (@"
+                        public {0} Send
                         (
-                            {requestClassName} request
-                        );"
-                    );
+                            {1} request
+                        );", responseClassName, requestClassName
+                    ).AppendLine();
                 }
             }
 

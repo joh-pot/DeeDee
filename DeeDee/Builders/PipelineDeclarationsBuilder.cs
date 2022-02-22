@@ -17,17 +17,17 @@ namespace DeeDee.Builders
             {
                 if (isAsync)
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        private readonly Lazy<NextAsync> {SafeVariableName(requestClassName)};"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        private readonly Lazy<NextAsync> {0};", SafeVariableName(requestClassName)
+                    ).AppendLine();
                 }
                 else
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        private readonly Lazy<Next> {SafeVariableName(requestClassName)};"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        private readonly Lazy<Next> {0};", SafeVariableName(requestClassName)
+                    ).AppendLine();
                 }
             }
 
@@ -35,17 +35,17 @@ namespace DeeDee.Builders
             {
                 if (isAsync)
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        private readonly Lazy<NextAsync<{responseClassName}>> {SafeVariableName(requestClassName, responseClassName)};"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        private readonly Lazy<NextAsync<{0}>> {1};", responseClassName, SafeVariableName(requestClassName, responseClassName)
+                    ).AppendLine();
                 }
                 else
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        private readonly Lazy<Next<{responseClassName}>> {SafeVariableName(requestClassName, responseClassName)};"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        private readonly Lazy<Next<{0}>> {1};", responseClassName, SafeVariableName(requestClassName, responseClassName)
+                    ).AppendLine();
                 }
             }
         }
@@ -61,17 +61,17 @@ namespace DeeDee.Builders
             {
                 if (isAsync)
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        {SafeVariableName(requestClassName)} = new Lazy<NextAsync>(BuildAsync<{requestClassName}>);"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        {0} = new Lazy<NextAsync>(BuildAsync<{1}>);", SafeVariableName(requestClassName), requestClassName
+                    ).AppendLine();
                 }
                 else
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        {SafeVariableName(requestClassName)} = new Lazy<Next>(Build<{requestClassName}>);"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        {0} = new Lazy<Next>(Build<{1}>);", SafeVariableName(requestClassName), requestClassName
+                    ).AppendLine();
                 }
             }
 
@@ -79,17 +79,17 @@ namespace DeeDee.Builders
             {
                 if (isAsync)
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                        {SafeVariableName(requestClassName, responseClassName)} = new Lazy<NextAsync<{responseClassName}>>(BuildAsync<{requestClassName},{responseClassName}>);"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                        {0} = new Lazy<NextAsync<{1}>>(BuildAsync<{2},{1}>);", SafeVariableName(requestClassName, responseClassName), responseClassName, requestClassName
+                    ).AppendLine();
                 }
                 else
                 {
-                    sourceBuilder.AppendLine
-                    (@$"
-                       {SafeVariableName(requestClassName, responseClassName)} = new Lazy<Next<{responseClassName}>>(Build<{requestClassName},{responseClassName}>);"
-                    );
+                    sourceBuilder.AppendFormat
+                    (@"
+                       {0} = new Lazy<Next<{1}>>(Build<{2},{1}>);", SafeVariableName(requestClassName, responseClassName), responseClassName, requestClassName
+                    ).AppendLine();
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace DeeDee.Builders
         {
 
             sourceBuilder.AppendLine
-            (@$"
+            (@"
                 private NextAsync BuildAsync<TRequest>() where TRequest : IRequest
                 {{
                     var actions = _serviceFactory.GetServices<IPipelineActionAsync<TRequest>>();
@@ -115,7 +115,7 @@ namespace DeeDee.Builders
             );
 
             sourceBuilder.AppendLine
-            (@$"
+            (@"
                 private Next Build<TRequest>() where TRequest : IRequest
                 {{
                     var actions = _serviceFactory.GetServices<IPipelineAction<TRequest>>();
@@ -134,7 +134,7 @@ namespace DeeDee.Builders
 
 
             sourceBuilder.AppendLine
-            (@$"
+            (@"
                 private NextAsync<TResponse> BuildAsync<TRequest, TResponse>() where TRequest : IRequest<TResponse>
                 {{
                     var actions = _serviceFactory.GetServices<IPipelineActionAsync<TRequest, TResponse>>();
@@ -150,7 +150,7 @@ namespace DeeDee.Builders
             );
 
             sourceBuilder.AppendLine
-            (@$"
+            (@"
                 private Next<TResponse> Build<TRequest, TResponse>() where TRequest : IRequest<TResponse>
                 {{
                     var actions = _serviceFactory.GetServices<IPipelineAction<TRequest, TResponse>>();

@@ -8,10 +8,11 @@
             using System;
             using System.Linq;
             using System.Reflection;
-            using {ns}DeeDee.Models;
+            using DeeDee.Models;
+            using {ns}DeeDee.Generated.Models;
             using Microsoft.Extensions.DependencyInjection;
-
-            namespace {ns}DeeDee
+            using ServiceProvider = DeeDee.Models.ServiceProvider;
+            namespace {ns}DeeDee.Generated
 ";
 
 
@@ -19,11 +20,28 @@
             {
                 internal static class IocExtensions
                 {
-                    public static IServiceCollection AddDispatcher(this IServiceCollection services)
+                    public static IServiceCollection AddDispatcher(this IServiceCollection services, Lifetime lifetime = Lifetime.Singleton)
                     {
-                        services.AddSingleton<IDispatcher, Dispatcher>();
+                        switch(lifetime)
+                        {
+                            case Lifetime.Singleton:
+                                services.AddSingleton<IDispatcher, Dispatcher>();
+                                services.AddSingleton<ServiceProvider>(ctx => ctx.GetRequiredService);
+                                break;
+
+                            case Lifetime.Scoped:
+                                services.AddScoped<IDispatcher, Dispatcher>();
+                                services.AddScoped<ServiceProvider>(ctx => ctx.GetRequiredService);
+                                break;
+
+                            case Lifetime.Transient:
+                                services.AddTransient<IDispatcher, Dispatcher>();
+                                services.AddTransient<ServiceProvider>(ctx => ctx.GetRequiredService);
+                                break;
+                        }
+                        
                         RegisterPipelineActions(services);
-                        services.AddSingleton<DeeDee.Models.ServiceProvider>(ctx => ctx.GetRequiredService);
+                        
                         return services;
                     }
 
@@ -56,9 +74,25 @@
                         {
                             foreach (var implementedInterface in type.GetInterfaces())
                             {
-                                services.AddSingleton(implementedInterface, type);
+                                var bindAs = type.GetCustomAttribute<BindAsAttribute>();
+                                switch (bindAs?.Lifetime)
+                                {
+                                    case Lifetime.Singleton:
+                                        services.AddSingleton(implementedInterface, type);
+                                        break;
+                                    case Lifetime.Scoped:
+                                        services.AddScoped(implementedInterface, type);
+                                        break;  
+                                    case Lifetime.Transient:
+                                        services.AddTransient(implementedInterface, type);
+                                        break;
+                                    default:
+                                        services.AddSingleton(implementedInterface, type);
+                                        break;
+                                }
+                                
                             }
-                        }
+                        } 
                     }
                 }
             }";
