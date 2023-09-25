@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 #nullable enable
 
 namespace DeeDee.Models
-
 {
     [StructLayout(LayoutKind.Auto)]
     public struct PipelineContext<TResponse>
@@ -13,22 +12,21 @@ namespace DeeDee.Models
         private FrugalDictionary _items;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddItem(object key, object? value)
+        public void AddItem<TValue>(string key, TValue? value)
         {
             _items.Add(key, value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public object? GetValue(object key)
+        public TValue? GetValue<TValue>(string key)
         {
-            return _items[key];
+            return (TValue?)_items[key];
         }
 
-        public bool TryGetValue(object key, out object? value)
+        public bool TryGetValue<TValue>(string key, out TValue? value)
         {
             return _items.TryGetValue(key, out value);
         }
-
     }
 
     [StructLayout(LayoutKind.Auto)]
@@ -37,18 +35,18 @@ namespace DeeDee.Models
         private FrugalDictionary _items;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void AddItem(object key, object? value)
+        public void AddItem(string key, object? value)
         {
             _items.Add(key, value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public object? GetValue(object key)
+        public object? GetValue(string key)
         {
             return _items[key];
         }
 
-        public bool TryGetValue(object key, out object? value)
+        public bool TryGetValue(string key, out object? value)
         {
             return _items.TryGetValue(key, out value);
         }

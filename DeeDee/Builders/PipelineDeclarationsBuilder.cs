@@ -166,14 +166,11 @@ namespace DeeDee.Builders
                     return builtPipeline;
                 }}"
             );
-
         }
 
         private static readonly Regex Safe = new("[^a-z]", RegexOptions.Compiled| RegexOptions.IgnoreCase);
-       
         public static string SafeVariableName(string requestClassName)
         {
-            
             return $"_{Safe.Replace(requestClassName, "_")}_lazy";
         }
 

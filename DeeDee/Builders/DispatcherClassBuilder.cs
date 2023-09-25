@@ -34,11 +34,8 @@ namespace DeeDee.Builders
             sourceBuilder.AppendLine("}");
             MethodsIRequest(ref sourceBuilder, irequests);
             MethodsIRequestT(ref sourceBuilder, irequestsOfT);
-
             PipelineDeclarationsBuilder.LazyFactoryMethods(ref sourceBuilder);
-
             sourceBuilder.AppendLine("}");
-
             sourceBuilder.AppendLine("}");
             return sourceBuilder.ToString();
         }

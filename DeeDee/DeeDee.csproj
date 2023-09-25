@@ -14,7 +14,7 @@
 		<PackageProjectUrl>https://github.com/joh-pot/DeeDee/wiki</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/joh-pot/DeeDee</RepositoryUrl>
 		<PackageTags>CQRS, command, queries, request, response, source generation</PackageTags>
-		<Version>2.0.0</Version>
+		<Version>2.0.1</Version>
 
 		
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
@@ -32,7 +32,6 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" PrivateAssets="all" />
 		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" PrivateAssets="all" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -8,21 +8,21 @@ namespace DeeDee.Models
     [StructLayout(LayoutKind.Auto)]
     internal struct FrugalDictionary
     {
-        private KeyValuePair<object, object?> _one;
-        private KeyValuePair<object, object?> _two;
-        private KeyValuePair<object, object?> _three;
-        private KeyValuePair<object, object?> _four;
-        private KeyValuePair<object, object?> _five;
-        private KeyValuePair<object, object?> _six;
-        private KeyValuePair<object, object?> _seven;
-        private KeyValuePair<object, object?> _eight;
-        private KeyValuePair<object, object?> _nine;
-        private KeyValuePair<object, object?> _ten;
+        private KeyValuePair<string, object?> _one;
+        private KeyValuePair<string, object?> _two;
+        private KeyValuePair<string, object?> _three;
+        private KeyValuePair<string, object?> _four;
+        private KeyValuePair<string, object?> _five;
+        private KeyValuePair<string, object?> _six;
+        private KeyValuePair<string, object?> _seven;
+        private KeyValuePair<string, object?> _eight;
+        private KeyValuePair<string, object?> _nine;
+        private KeyValuePair<string, object?> _ten;
         private byte _allocated;
-        private Dictionary<object, object?>? _values;
+        private Dictionary<string, object?>? _values;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool TryCheck(ref KeyValuePair<object, object?> kvp, object key, out object? value)
+        private static bool TryCheck(ref KeyValuePair<string, object?> kvp, string key, out object? value)
         {
             if (kvp.Key.Equals(key))
             {
@@ -34,17 +34,24 @@ namespace DeeDee.Models
             return false;
         }
 
-        public bool TryGetValue(object key, out object? value)
+        public bool TryGetValue<TValue>(string key, out TValue? value)
         {
             var (found, val) = FindEntry(key);
-            value = val;
-            return found;
+
+            if (val is TValue tvalue)
+            {
+                value = tvalue;
+                return found;
+            }
+
+            value = default;
+            return false;
         }
 
         private static (bool Found, object? Value) Found(object? value) => (true, value);
         private static (bool Found, object? Value) NotFound() => (false, null);
 
-        private (bool Found, object? Value) FindEntry(object key)
+        private (bool Found, object? Value) FindEntry(string key)
         {
             switch (_allocated)
             {
@@ -187,7 +194,7 @@ namespace DeeDee.Models
 
         }
 
-        public object? this[object key]
+        public object? this[string key]
         {
             get
             {
@@ -198,54 +205,54 @@ namespace DeeDee.Models
             }
         }
 
-        public void Add(object key, object? value)
+        public void Add(string key, object? value)
         {
             switch (_allocated)
             {
 
                 case 0:
-                    _one = new KeyValuePair<object, object?>(key, value);
+                    _one = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 1:
-                    _two = new KeyValuePair<object, object?>(key, value);
+                    _two = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 2:
-                    _three = new KeyValuePair<object, object?>(key, value);
+                    _three = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 3:
-                    _four = new KeyValuePair<object, object?>(key, value);
+                    _four = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 4:
-                    _five = new KeyValuePair<object, object?>(key, value);
+                    _five = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 5:
-                    _six = new KeyValuePair<object, object?>(key, value);
+                    _six = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 6:
-                    _seven = new KeyValuePair<object, object?>(key, value);
+                    _seven = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 7:
-                    _eight = new KeyValuePair<object, object?>(key, value);
+                    _eight = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 8:
-                    _nine = new KeyValuePair<object, object?>(key, value);
+                    _nine = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 case 9:
-                    _ten = new KeyValuePair<object, object?>(key, value);
+                    _ten = new KeyValuePair<string, object?>(key, value);
                     ++_allocated;
                     return;
                 default:
                     {
-                        _values ??= new Dictionary<object, object?>(11)
+                        _values ??= new Dictionary<string, object?>(11)
                     {
                         { _one.Key, _one.Value },
                         { _two.Key, _two.Value },

@@ -58,9 +58,9 @@ namespace DeeDee
 
             context.AddSource("IocExtensions.cs", iocExtensions);
 
-            var irequestsOfT = new List<(string RequestClassName, string ResponseClassName, bool isAsync)>();
+            var irequestsOfT = new List<(string RequestClassName, string ResponseClassName, bool IsAsync)>();
 
-            var irequests = new List<(string RequestClassName, bool isAsync)>();
+            var irequests = new List<(string RequestClassName, bool IsAsync)>();
 
             foreach (var namespaceOrTypeSymbol in compilation.GlobalNamespace.GetMembers())
             {
@@ -84,8 +84,8 @@ namespace DeeDee
         private static void FlattenNamespaces
         (
             ISymbol namespaceOrTypeSymbol,
-            List<(string RequestClassName, string ResponseClassName, bool isAsync)> irequestsOfT,
-            List<(string RequestClassName, bool isAsync)> irequests
+            List<(string RequestClassName, string ResponseClassName, bool IsAsync)> irequestsOfT,
+            List<(string RequestClassName, bool IsAsync)> irequests
         )
         {
             if (namespaceOrTypeSymbol.Name is "System" or "Microsoft" or "<Module>") return;
