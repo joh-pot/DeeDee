@@ -14,12 +14,14 @@ namespace DeeDee.Builders
         {
             var sourceBuilder = new StringBuilder
             ($@"
+                
                 using System;
                 using System.Threading;
                 using System.Threading.Tasks;
                 using System.Linq;
                 using DeeDee.Models;
                 using ServiceProvider = DeeDee.Models.ServiceProvider;
+#nullable enable
                 namespace {ns}DeeDee.Generated.Models"
             );
             sourceBuilder.AppendLine("{");

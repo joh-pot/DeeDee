@@ -18,6 +18,7 @@ namespace DeeDee.Builders
                 using System.Threading;
                 using System.Threading.Tasks;
                 using DeeDee.Models;
+                #nullable enable
                 namespace {ns}DeeDee.Generated.Models"
             );
             sourceBuilder.AppendLine("{");

@@ -12,6 +12,7 @@
             using {ns}DeeDee.Generated.Models;
             using Microsoft.Extensions.DependencyInjection;
             using ServiceProvider = DeeDee.Models.ServiceProvider;
+            #nullable enable
             namespace {ns}DeeDee.Generated
 ";
 

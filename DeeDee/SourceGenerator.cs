@@ -56,7 +56,7 @@ namespace DeeDee
 
             var iocExtensions = IocExtensionsBuilder.Build(ns);
 
-            context.AddSource("IocExtensions.cs", iocExtensions);
+            context.AddSource("IocExtensions.g.cs", iocExtensions);
 
             var irequestsOfT = new List<(string RequestClassName, string ResponseClassName, bool IsAsync)>();
 
@@ -75,9 +75,9 @@ namespace DeeDee
 
             var dispatcher = DispatcherClassBuilder.Build(ns, distinctIrequest, distinctIrequestOfT);
 
-            context.AddSource("IDispatcher.cs", FormatCode(idispatcher));
+            context.AddSource("IDispatcher.g.cs", FormatCode(idispatcher));
 
-            context.AddSource("Dispatcher.cs", FormatCode(dispatcher));
+            context.AddSource("Dispatcher.g.cs", FormatCode(dispatcher));
 
         }
 
